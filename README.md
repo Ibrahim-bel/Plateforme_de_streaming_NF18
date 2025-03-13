@@ -22,45 +22,7 @@ Le modèle de données inclut les principales entités suivantes :
 - **Historique d'écoute** : Stocke les informations sur les écoutes des utilisateurs.
 - **Droits d'auteur** : Enregistre les auteurs, compositeurs et éditeurs des chansons.
 
-## Requêtes demandées
-Les requêtes SQL suivantes permettent d'exploiter la base de données :
 
-1. **Durée moyenne des chansons par artiste (si l'artiste a au moins 5 chansons)**
-   ```sql
-   SELECT artiste.nom, AVG(chanson.duree) AS duree_moyenne
-   FROM chanson
-   JOIN artiste ON chanson.artiste_id = artiste.id
-   GROUP BY artiste.nom
-   HAVING COUNT(chanson.id) >= 5;
-   ```
-
-2. **Artistes les plus prolifiques (ceux avec le plus de chansons)**
-   ```sql
-   SELECT artiste.nom, COUNT(chanson.id) AS nombre_chansons
-   FROM chanson
-   JOIN artiste ON chanson.artiste_id = artiste.id
-   GROUP BY artiste.nom
-   ORDER BY nombre_chansons DESC;
-   ```
-
-3. **Artistes avec les chansons les plus longues (par ex. > 10 minutes)**
-   ```sql
-   SELECT artiste.nom, chanson.titre, chanson.duree
-   FROM chanson
-   JOIN artiste ON chanson.artiste_id = artiste.id
-   WHERE chanson.duree > 600
-   ORDER BY chanson.duree DESC;
-   ```
-
-4. **Genres préférés des utilisateurs**
-   ```sql
-   SELECT utilisateur.nom_utilisateur, genre.nom, COUNT(*) AS nombre_lectures
-   FROM historique_ecoute
-   JOIN chanson ON historique_ecoute.chanson_id = chanson.id
-   JOIN genre ON chanson.genre_id = genre.id
-   JOIN utilisateur ON historique_ecoute.utilisateur_id = utilisateur.id
-   GROUP BY utilisateur.nom_utilisateur, genre.nom
-   ORDER BY utilisateur.nom_utilisateur, nombre_lectures DESC;
    ```
 
 ## Technologies utilisées
