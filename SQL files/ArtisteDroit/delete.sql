@@ -1,0 +1,2 @@
+DELETE FROM ArtisteDroit;
+DROP TABLE IF EXISTS ArtisteDroit;

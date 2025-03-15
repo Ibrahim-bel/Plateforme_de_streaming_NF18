@@ -1,0 +1,2 @@
+DELETE FROM Chanson;
+DROP TABLE IF EXISTS Chanson;

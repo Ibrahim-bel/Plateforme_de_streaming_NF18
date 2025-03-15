@@ -1,0 +1,81 @@
+@startuml
+abstract class Utilisateur {
+  +id: int {key}
+  +nom_utilisateur: string
+  +adresse_mail: string
+  +mot_de_passe: string
+  +date_inscription: date
+  +preferences: JSON
+  +amis: JSON
+}
+
+class Regulier {}
+
+'class Amitie {
+'}
+
+class AbonnePremium {
+  '+qualite_audio: string
+  '+ecoute_hors_ligne: bool
+}
+
+abstract class Artiste {
+  +id: int {key}
+  +nom: string
+  +info_artiste: JSON
+}
+
+class Solo {}
+class Groupe {}
+
+class Album {
+  +id: int {key}
+  +titre: string
+  +annee_sortie: int
+}
+
+class Chanson {
+  +id: int {key}
+  +titre: string
+  +duree: time
+  +genre: JSON
+}
+
+class DroitAuteur {
+  +id: int{key}
+  +editeurs: JSON
+}
+
+
+class Playlist {
+  +id: int {key}
+  +info_playlist: JSON
+  +autorisation_acces: string ['publique', 'privée', 'partagée avec des amis']
+}
+
+
+note left of Utilisateur : Un utilisateur ne peut pas être ami avec lui-même
+
+AbonnePremium --|> Utilisateur
+Regulier --|> Utilisateur
+
+Solo --|> Artiste
+Groupe --|> Artiste
+
+Solo "*" -- "0..1" Groupe : fait partie
+
+Artiste "*" -- "*" Album : collabore
+Artiste "0..1" -- "*" Chanson : artiste associé
+
+Artiste  "0..1"-- "*" Album : artiste principal 
+
+Album "0..1" o-- "1..*" Chanson : est composé
+
+DroitAuteur "*" -- "1..*" Artiste : compositeur
+DroitAuteur "*" -- "1..*" Artiste : auteur
+DroitAuteur "1" --* Chanson
+
+Playlist "*" -- "0..1" Utilisateur : créateur
+Playlist "*" -- "*" Chanson : contient
+Playlist "*" -- "*" Album : appartient
+@enduml

@@ -1,0 +1,2 @@
+DELETE FROM Playlist;
+DROP TABLE IF EXISTS Playlist;
